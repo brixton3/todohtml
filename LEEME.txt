@@ -1,0 +1,2 @@
+clipboard.html
+    html puro y js, ejemplo de copyboard

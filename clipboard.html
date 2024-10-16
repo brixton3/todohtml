@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy to Clipboard Example</title>
+</head>
+<body>
+    <h1>Copy to Clipboard Example</h1>
+    <input type="text" name="textToCopy" id="textToCopy" value="Hello, clipboard">
+    <button id="copyButton">Copy to Clipboard</button>
+    <script>
+        function copyToClipboard(text){
+            navigator.clipboard.writeText(text).then(() =>{
+                console.log('Text copied to clipboard');
+                alert('Text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ',err);
+                alert('Failed to copy text. See console for details');
+            });
+        }
+        const button = document.getElementById('copyButton');
+        const input = document.getElementById('textToCopy');
+        button.addEventListener('click', () => {
+            copyToClipboard(input.value);
+        });
+    </script>
+</body>
+</html>
