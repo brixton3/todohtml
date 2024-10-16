@@ -1,2 +1,4 @@
 clipboard.html
     html puro y js, ejemplo de copyboard
+probando_api.html
+    probando api free, https://open-meteo.com/

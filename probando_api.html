@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de API Open Meteo</title>
+</head>
+<body>
+    <h1>Prueba de API Open Meteo</h1>
+    <button id="fetchWeather">Obtener Pronóstico</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('fetchWeather').addEventListener('click', () => {
+            const latitude = 52.52;
+            const longitude = 13.41;
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la red');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Procesar y mostrar los datos
+                    console.log(data);
+                    document.getElementById('result').innerHTML = `
+                        <h2>Datos del Pronóstico:</h2>
+                        <p>Temperatura actual: ${data.current.temperature_2m} °C</p>
+                        <p>Velocidad del viento: ${data.current.windspeed} m/s</p>
+                        <h3>Datos Horarios:</h3>
+                        <ul>
+                            ${data.hourly.temperature_2m.map((temp, index) => `
+                                <li>Hora: ${data.hourly.time[index]} - Temperatura: ${temp} °C</li>
+                            `).join('')}
+                        </ul>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerHTML = `<p>Error al obtener datos: ${error.message}</p>`;
+                });
+        });
+    </script>
+</body>
+</html>
